@@ -111,7 +111,20 @@ char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
   return dest;
 }
 
-s21_size_t s21_strcspn(const char *str1, const char *str2);
+s21_size_t s21_strcspn(const char *str1, const char *str2) {
+  const s21_size_t str1_len = s21_strlen(str1);
+  s21_size_t index = str1_len;
+  if (str1 != S21_NULL && str2 != S21_NULL) {
+    const s21_size_t str2_len = s21_strlen(str2);
+    for (s21_size_t i = 0; i < str1_len && index == str1_len; i++) {
+      for (s21_size_t j = 0; j < str2_len && index == str1_len; j++) {
+        if (str1[i] == str2[j]) index = i;
+      }
+    }
+  }
+  return index;
+}
+
 char *s21_strerror(int errnum);
 
 s21_size_t s21_strlen(const char *str) {

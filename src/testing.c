@@ -54,5 +54,13 @@ int main() {
   printf("%s\n", s21_strncpy(str1_copy3, str1_copy1, 20));
   printf("%s\n\n", strncpy(str1_copy4, str1_copy1, 20));
 
+  printf("strcspn:\n");
+  printf("%ld\n", s21_strcspn(str1_copy3, "N"));
+  printf("%ld\n", s21_strcspn(str1_copy3, "t"));
+  printf("%ld\n\n", s21_strcspn(str1_copy3, "B"));
+  printf("%ld\n", strcspn(str1_copy4, "N"));
+  printf("%ld\n", strcspn(str1_copy4, "t"));
+  printf("%ld\n\n", strcspn(str1_copy4, "B"));
+
   return 0;
 }
