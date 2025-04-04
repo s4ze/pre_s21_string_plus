@@ -17,9 +17,9 @@ int main() {
   printf("%d\n\n", memcmp(str1, str2, 7));
 
   char *str1_copy1 = malloc(sizeof(char) * 15);
-  strcpy(str1_copy1, "Bruhi!!");
+  strcpy(str1_copy1, "BruhB!!");
   char *str1_copy2 = malloc(sizeof(char) * 15);
-  strcpy(str1_copy2, "Bruhi!!");
+  strcpy(str1_copy2, "BruhB!!");
 
   printf("memcpy:\n");
   s21_memcpy(str1_copy1, str1, 5);
@@ -40,9 +40,9 @@ int main() {
   printf("%s\n\n", str1_copy2);
 
   printf("strchr:\n");
-  printf("%s %p %c\n", str1_copy1, s21_strchr(str1_copy1, 't'),
+  printf("%s %p %c\n", str1_copy1, s21_strchr(str1_copy1, 'B'),
          *s21_strchr(str1_copy1, 'B'));
-  printf("%s %p %c\n\n", str1_copy1, strchr(str1_copy1, 't'),
+  printf("%s %p %c\n\n", str1_copy1, strchr(str1_copy1, 'B'),
          *strchr(str1_copy1, 'B'));
 
   printf("strncmp:\n");
@@ -68,6 +68,7 @@ int main() {
   for (int i = 0; i < 161; i += 20) {
     printf("%s\t%s\n", strerror(i), s21_strerror(i));
   }
+  printf("\n");
 
   printf("strpbrk:\n");
   printf("%p %c\n", s21_strpbrk(str1_copy3, "othaw"),
@@ -76,10 +77,8 @@ int main() {
          *s21_strpbrk(str1_copy3, "othaw"));
 
   printf("strrchr:\n");
-  printf("%s %p %c\n", str1_copy1, s21_strrchr(str1_copy1, 't'),
-         *s21_strchr(str1_copy1, 'B'));
-  printf("%s %p %c\n\n", str1_copy1, strrchr(str1_copy1, 't'),
-         *strchr(str1_copy1, 'B'));
+  printf("%s %p\n", s21_strrchr(str1_copy1, 'B'), s21_strrchr(str1_copy1, 'B'));
+  printf("%s %p\n\n", strrchr(str1_copy1, 'B'), strrchr(str1_copy1, 'B'));
 
   return 0;
 }

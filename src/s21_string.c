@@ -59,18 +59,17 @@ char *s21_strncat(char *dest, const char *src, s21_size_t n) {
 char *s21_strchr(const char *str, int c) {
   char *c_ptr = S21_NULL;
   if (str != S21_NULL) {
-    const char *str_uchar = (const char *)str;
     char c_uchar = (char)c;
-    for (s21_size_t i = 0;
-         c_ptr == S21_NULL && (i == 0 || str_uchar[i - 1] != '\0'); i++)
-      if (str_uchar[i] == c_uchar) c_ptr = (char *)str_uchar + i;
+    for (s21_size_t i = 0; c_ptr == S21_NULL && (i == 0 || str[i - 1] != '\0');
+         i++)
+      if (str[i] == c_uchar) c_ptr = (char *)str + i;
   }
   return c_ptr;
 }
 
 /* char *s21_strchr(const char *str, int c) {
   return (char *)s21_memchr((const void *)str, c, s21_strlen(str) + 1);
-} // functional implementation*/
+}  // functional implementation */
 
 int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {
   s21_size_t size = s21_strlen(str1) + 1;
