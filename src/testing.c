@@ -4,9 +4,23 @@
 #include "s21_string.h"
 
 int main() {
-  char str[] = "Hello, World!";
-  printf("%c\n", *(char *)s21_memchr(str, 'o', 7));
-  printf("%c", *(char *)memchr(str, 'o', 7));
+  printf("memchr:\n");
+  char str1[] = "Hello, World!";
+  printf("%c\n", *(char *)s21_memchr(str1, 'o', 7));
+  printf("%c\n\n", *(char *)memchr(str1, 'o', 7));
+
+  printf("memcmp:\n");
+  char str2[] = "Hello!";
+  printf("%d\n", s21_memcmp(str1, str2, 7));
+  printf("%d\n\n", memcmp(str1, str2, 7));
+
+  printf("memcpy:\n");
+  char str1_copy1[] = "Bruhi!!";
+  char str1_copy2[] = "Bruhi!!";
+  s21_memcpy(str1_copy1, str1, 5);
+  printf("%s\n", str1_copy1);
+  memcpy(str1_copy2, str1, 5);
+  printf("%s\n", str1_copy2);
 
   return 0;
 }
