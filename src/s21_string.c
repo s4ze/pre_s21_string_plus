@@ -4,13 +4,10 @@ void *s21_memchr(const void *str, int c, s21_size_t n) {
   s21_size_t index = n;
   const unsigned char *str_uchar = (const unsigned char *)str;
   unsigned char c_uchar = (unsigned char)c;
-  if (str != S21_NULL) {
-    for (s21_size_t i = 0; i < n && index == n; i++) {
-      if (str_uchar[i] == c_uchar) {
-        index = i;
-      }
-    }
-  }
+  if (str != S21_NULL)
+    for (s21_size_t i = 0; i < n && index == n; i++)
+      if (str_uchar[i] == c_uchar) index = i;
+
   return index != n ? (void *)(str_uchar + index) : S21_NULL;
 }
 
@@ -19,11 +16,9 @@ int s21_memcmp(const void *str1, const void *str2, s21_size_t n) {
   if (str1 != S21_NULL && str2 != S21_NULL) {
     const unsigned char *str1_uchar = (const unsigned char *)str1;
     const unsigned char *str2_uchar = (const unsigned char *)str2;
-    for (s21_size_t i = 0; i < n && cmp == 0; i++) {
-      if (str1_uchar[i] != str2_uchar[i]) {
+    for (s21_size_t i = 0; i < n && cmp == 0; i++)
+      if (str1_uchar[i] != str2_uchar[i])
         cmp = (int)str1_uchar[i] - (int)str2_uchar[i];
-      }
-    }
   } else if (str1 != str2) {
     if (str1 == S21_NULL)
       cmp = -1;
@@ -37,9 +32,7 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
   if (dest != S21_NULL && src != S21_NULL) {
     unsigned char *dest_uchar = (unsigned char *)dest;
     const unsigned char *src_uchar = (const unsigned char *)src;
-    for (s21_size_t i = 0; i < n; i++) {
-      dest_uchar[i] = src_uchar[i];
-    }
+    for (s21_size_t i = 0; i < n; i++) dest_uchar[i] = src_uchar[i];
   }
   return dest;
 }
@@ -48,9 +41,7 @@ void *s21_memset(void *str, int c, s21_size_t n) {
   if (str != S21_NULL) {
     unsigned char *str_uchar = (unsigned char *)str;
     unsigned char c_uchar = (unsigned char)c;
-    for (s21_size_t i = 0; i < n; i++) {
-      str_uchar[i] = c_uchar;
-    }
+    for (s21_size_t i = 0; i < n; i++) str_uchar[i] = c_uchar;
   }
   return str;
 }
@@ -59,9 +50,7 @@ char *s21_strncat(char *dest, const char *src, s21_size_t n) {
   if (dest != S21_NULL && src != S21_NULL) {
     s21_size_t dest_size = s21_strlen(dest);
     char *ptr = dest + dest_size;
-    for (s21_size_t i = 0; i < n; i++) {
-      *ptr++ = src[i];
-    }
+    for (s21_size_t i = 0; i < n; i++) *ptr++ = src[i];
     *ptr = '\0';
   }
   return dest;
@@ -72,11 +61,9 @@ char *s21_strchr(const char *str, int c) {
   if (str != S21_NULL) {
     const char *str_uchar = (const char *)str;
     char c_uchar = (char)c;
-    for (s21_size_t i = 0; i == 0 || str[i - 1] != '\0'; i++) {
-      if (str_uchar[i] == c_uchar) {
-        c_ptr = (char *)str_uchar + i;
-      }
-    }
+    for (s21_size_t i = 0;
+         c_ptr == S21_NULL && (i == 0 || str_uchar[i - 1] != '\0'); i++)
+      if (str_uchar[i] == c_uchar) c_ptr = (char *)str_uchar + i;
   }
   return c_ptr;
 }
@@ -95,18 +82,15 @@ int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {
 char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
   if (dest != S21_NULL && src != S21_NULL) {
     /* s21_size_t i = 0;
-    for (; src[i] != '\0' && i < n; i++) {
-      dest[i] = src[i];
-    }  // or next block */
+    for (; src[i] != '\0' && i < n; i++) dest[i] = src[i];
+    // or next block */
 
     // to remove if previous block used
     dest = (char *)s21_memcpy(dest, src, n);
     s21_size_t i = s21_strlen(dest);
     //
 
-    for (; i < n + 1; i++) {
-      dest[i] = '\0';
-    }
+    for (; i < n + 1; i++) dest[i] = '\0';
   }
   return dest;
 }
@@ -116,16 +100,24 @@ s21_size_t s21_strcspn(const char *str1, const char *str2) {
   s21_size_t index = str1_len;
   if (str1 != S21_NULL && str2 != S21_NULL) {
     const s21_size_t str2_len = s21_strlen(str2);
-    for (s21_size_t i = 0; i < str1_len && index == str1_len; i++) {
-      for (s21_size_t j = 0; j < str2_len && index == str1_len; j++) {
+    for (s21_size_t i = 0; i < str1_len && index == str1_len; i++)
+      for (s21_size_t j = 0; j < str2_len && index == str1_len; j++)
         if (str1[i] == str2[j]) index = i;
-      }
-    }
   }
   return index;
 }
 
-char *s21_strerror(int errnum);
+char *s21_strerror(int errnum) {
+  char *errnum_description;
+  static char *errlist[] = ERRLIST;
+  if (errnum >= 0 && errnum < ERRLIST_LEN)
+    errnum_description = (char *)errlist[errnum];
+  else {
+    errnum_description = errlist[ERRLIST_LEN - 1];
+    // TODO: add errnum after "Unkown error " with sprintf
+  }
+  return errnum_description;
+}
 
 s21_size_t s21_strlen(const char *str) {
   s21_size_t size = 0;
@@ -133,3 +125,30 @@ s21_size_t s21_strlen(const char *str) {
     for (; str[size] != '\0'; size++);
   return size;
 }
+
+char *s21_strpbrk(const char *str1, const char *str2) {
+  char *index = S21_NULL;
+  if (str1 != S21_NULL && str2 != S21_NULL) {
+    const s21_size_t str1_len = s21_strlen(str1);
+    const s21_size_t str2_len = s21_strlen(str2);
+    for (s21_size_t i = 0; i < str1_len && index == 0; i++) {
+      for (s21_size_t j = 0; j < str2_len && index == 0; j++)
+        if (str1[i] == str2[j]) index = (char *)str1 + i;
+    }
+  }
+  return index;
+}
+
+char *s21_strrchr(const char *str, int c) {
+  char *c_ptr = S21_NULL;
+  if (str != S21_NULL) {
+    const char *str_uchar = (const char *)str;
+    char c_uchar = (char)c;
+    for (s21_size_t i = 0; i == 0 || str_uchar[i - 1] != '\0'; i++)
+      if (str_uchar[i] == c_uchar) c_ptr = (char *)str_uchar + i;
+  }
+  return c_ptr;
+}
+
+char *s21_strstr(const char *haystack, const char *needle);
+char *s21_strtok(char *str, const char *delim);

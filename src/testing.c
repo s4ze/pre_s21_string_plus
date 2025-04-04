@@ -40,8 +40,10 @@ int main() {
   printf("%s\n\n", str1_copy2);
 
   printf("strchr:\n");
-  printf("%p %c\n", s21_strchr(str1_copy1, 't'), *s21_strchr(str1_copy1, 't'));
-  printf("%p %c\n\n", strchr(str1_copy1, 't'), *strchr(str1_copy1, 't'));
+  printf("%s %p %c\n", str1_copy1, s21_strchr(str1_copy1, 't'),
+         *s21_strchr(str1_copy1, 'B'));
+  printf("%s %p %c\n\n", str1_copy1, strchr(str1_copy1, 't'),
+         *strchr(str1_copy1, 'B'));
 
   printf("strncmp:\n");
   printf("%d\n", s21_strncmp(str1, str1_copy1, 7));
@@ -58,9 +60,26 @@ int main() {
   printf("%ld\n", s21_strcspn(str1_copy3, "N"));
   printf("%ld\n", s21_strcspn(str1_copy3, "t"));
   printf("%ld\n\n", s21_strcspn(str1_copy3, "B"));
-  printf("%ld\n", strcspn(str1_copy4, "N"));
-  printf("%ld\n", strcspn(str1_copy4, "t"));
-  printf("%ld\n\n", strcspn(str1_copy4, "B"));
+  printf("%ld\n", strcspn(str1_copy3, "N"));
+  printf("%ld\n", strcspn(str1_copy3, "t"));
+  printf("%ld\n\n", strcspn(str1_copy3, "B"));
+
+  printf("strerror:\n");
+  for (int i = 0; i < 161; i += 20) {
+    printf("%s\t%s\n", strerror(i), s21_strerror(i));
+  }
+
+  printf("strpbrk:\n");
+  printf("%p %c\n", s21_strpbrk(str1_copy3, "othaw"),
+         *s21_strpbrk(str1_copy3, "othaw"));
+  printf("%p %c\n\n", strpbrk(str1_copy3, "othaw"),
+         *s21_strpbrk(str1_copy3, "othaw"));
+
+  printf("strrchr:\n");
+  printf("%s %p %c\n", str1_copy1, s21_strrchr(str1_copy1, 't'),
+         *s21_strchr(str1_copy1, 'B'));
+  printf("%s %p %c\n\n", str1_copy1, strrchr(str1_copy1, 't'),
+         *strchr(str1_copy1, 'B'));
 
   return 0;
 }
