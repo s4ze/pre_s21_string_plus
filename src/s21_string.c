@@ -57,14 +57,42 @@ void *s21_memset(void *str, int c, s21_size_t n) {
 
 char *s21_strncat(char *dest, const char *src, s21_size_t n) {
   if (dest != S21_NULL && src != S21_NULL) {
-    char *ptr = dest;
-    for (; *ptr != '\0'; ptr++);
-    s21_size_t dest_size = ptr - dest;
-    dest = (char *)realloc(dest, sizeof(char) * (dest_size + 1 + n));
-    ptr = dest + dest_size + 1;
+    s21_size_t dest_size = s21_strlen(dest);
+    char *ptr = dest + dest_size;
     for (s21_size_t i = 0; i < n; i++) {
       *ptr++ = src[i];
     }
+    *ptr = '\0';
   }
   return dest;
+}
+
+char *s21_strchr(const char *str, int c) {
+  char *c_ptr = S21_NULL;
+  if (str != S21_NULL) {
+    const char *str_uchar = (const char *)str;
+    char c_uchar = (char)c;
+    for (s21_size_t i = 0; i == 0 || str[i - 1] != '\0'; i++) {
+      if (str_uchar[i] == c_uchar) {
+        c_ptr = (char *)str_uchar + i;
+      }
+    }
+  }
+  return c_ptr;
+}
+
+/* char *s21_strchr(const char *str, int c) {
+  return (char *)s21_memchr((const void *)str, c, s21_strlen(str) + 1);
+} */
+
+int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
+char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+s21_size_t s21_strcspn(const char *str1, const char *str2);
+char *s21_strerror(int errnum);
+
+s21_size_t s21_strlen(const char *str) {
+  s21_size_t size = 0;
+  if (str != S21_NULL)
+    for (; str[size] != '\0'; size++);
+  return size;
 }

@@ -4,19 +4,24 @@
 #include "s21_string.h"
 
 int main() {
+  char *str1 = "Hello, World!";
+
   printf("memchr:\n");
-  char str1[] = "Hello, World!";
   printf("%c\n", *(char *)s21_memchr(str1, 'o', 7));
   printf("%c\n\n", *(char *)memchr(str1, 'o', 7));
 
+  char *str2 = "Hello!";
+
   printf("memcmp:\n");
-  char str2[] = "Hello!";
   printf("%d\n", s21_memcmp(str1, str2, 7));
   printf("%d\n\n", memcmp(str1, str2, 7));
 
+  char *str1_copy1 = malloc(sizeof(char) * 15);
+  strcpy(str1_copy1, "Bruhi!!");
+  char *str1_copy2 = malloc(sizeof(char) * 15);
+  strcpy(str1_copy2, "Bruhi!!");
+
   printf("memcpy:\n");
-  char str1_copy1[] = "Bruhi!!";
-  char str1_copy2[] = "Bruhi!!";
   s21_memcpy(str1_copy1, str1, 5);
   printf("%s\n", str1_copy1);
   memcpy(str1_copy2, str1, 5);
@@ -29,10 +34,14 @@ int main() {
   printf("%s\n\n", str1_copy2);
 
   printf("strncat:\n");
-  strncat(str1_copy2, "browhatthehell", 1);
-  printf("%s\n\n", str1_copy2);
-  s21_strncat(str1_copy1, "browhatthehell", 1);
+  s21_strncat(str1_copy1, "browhatthehell", 7);
   printf("%s\n", str1_copy1);
+  strncat(str1_copy2, "browhatthehell", 7);
+  printf("%s\n\n", str1_copy2);
+
+  printf("strchr:\n");
+  printf("%p %c\n", s21_strchr(str1_copy1, 't'), *s21_strchr(str1_copy1, 't'));
+  printf("%p %c\n\n", strchr(str1_copy1, 't'), *strchr(str1_copy1, 't'));
 
   return 0;
 }
