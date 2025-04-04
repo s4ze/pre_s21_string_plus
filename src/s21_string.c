@@ -54,3 +54,17 @@ void *s21_memset(void *str, int c, s21_size_t n) {
   }
   return str;
 }
+
+char *s21_strncat(char *dest, const char *src, s21_size_t n) {
+  if (dest != S21_NULL && src != S21_NULL) {
+    char *ptr = dest;
+    for (; *ptr != '\0'; ptr++);
+    s21_size_t dest_size = ptr - dest;
+    dest = (char *)realloc(dest, sizeof(char) * (dest_size + 1 + n));
+    ptr = dest + dest_size + 1;
+    for (s21_size_t i = 0; i < n; i++) {
+      *ptr++ = src[i];
+    }
+  }
+  return dest;
+}

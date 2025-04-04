@@ -28,5 +28,11 @@ int main() {
   memset(str1_copy2, 'B', 6);
   printf("%s\n\n", str1_copy2);
 
+  printf("strncat:\n");
+  strncat(str1_copy2, "browhatthehell", 1);
+  printf("%s\n\n", str1_copy2);
+  s21_strncat(str1_copy1, "browhatthehell", 1);
+  printf("%s\n", str1_copy1);
+
   return 0;
 }
