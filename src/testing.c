@@ -43,5 +43,16 @@ int main() {
   printf("%p %c\n", s21_strchr(str1_copy1, 't'), *s21_strchr(str1_copy1, 't'));
   printf("%p %c\n\n", strchr(str1_copy1, 't'), *strchr(str1_copy1, 't'));
 
+  printf("strncmp:\n");
+  printf("%d\n", s21_strncmp(str1, str1_copy1, 7));
+  printf("%d\n\n", strncmp(str1, str1_copy1, 7));
+
+  char *str1_copy3 = (char *)malloc(sizeof(char) * 21);
+  char *str1_copy4 = (char *)malloc(sizeof(char) * 21);
+
+  printf("strncpy:\n");
+  printf("%s\n", s21_strncpy(str1_copy3, str1_copy1, 20));
+  printf("%s\n\n", strncpy(str1_copy4, str1_copy1, 20));
+
   return 0;
 }

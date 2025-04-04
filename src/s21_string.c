@@ -83,10 +83,34 @@ char *s21_strchr(const char *str, int c) {
 
 /* char *s21_strchr(const char *str, int c) {
   return (char *)s21_memchr((const void *)str, c, s21_strlen(str) + 1);
-} */
+} // functional implementation*/
 
-int s21_strncmp(const char *str1, const char *str2, s21_size_t n);
-char *s21_strncpy(char *dest, const char *src, s21_size_t n);
+int s21_strncmp(const char *str1, const char *str2, s21_size_t n) {
+  s21_size_t size = s21_strlen(str1) + 1;
+  size = size > s21_strlen(str2) + 1 ? s21_strlen(str2) + 1 : size;
+  size = size > n ? n : size;
+  return s21_memcmp((const void *)str1, (const void *)str2, size);
+}
+
+char *s21_strncpy(char *dest, const char *src, s21_size_t n) {
+  if (dest != S21_NULL && src != S21_NULL) {
+    /* s21_size_t i = 0;
+    for (; src[i] != '\0' && i < n; i++) {
+      dest[i] = src[i];
+    }  // or next block */
+
+    // to remove if previous block used
+    dest = (char *)s21_memcpy(dest, src, n);
+    s21_size_t i = s21_strlen(dest);
+    //
+
+    for (; i < n + 1; i++) {
+      dest[i] = '\0';
+    }
+  }
+  return dest;
+}
+
 s21_size_t s21_strcspn(const char *str1, const char *str2);
 char *s21_strerror(int errnum);
 
