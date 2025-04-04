@@ -20,7 +20,13 @@ int main() {
   s21_memcpy(str1_copy1, str1, 5);
   printf("%s\n", str1_copy1);
   memcpy(str1_copy2, str1, 5);
-  printf("%s\n", str1_copy2);
+  printf("%s\n\n", str1_copy2);
+
+  printf("memset:\n");
+  s21_memset(str1_copy1, 'B', 6);
+  printf("%s\n", str1_copy1);
+  memset(str1_copy2, 'B', 6);
+  printf("%s\n\n", str1_copy2);
 
   return 0;
 }

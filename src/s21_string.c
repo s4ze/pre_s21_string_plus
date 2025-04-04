@@ -3,9 +3,10 @@
 void *s21_memchr(const void *str, int c, s21_size_t n) {
   s21_size_t index = n;
   const unsigned char *str_uchar = (const unsigned char *)str;
+  unsigned char c_uchar = (unsigned char)c;
   if (str != S21_NULL) {
     for (s21_size_t i = 0; i < n && index == n; i++) {
-      if (str_uchar[i] == (unsigned char)c) {
+      if (str_uchar[i] == c_uchar) {
         index = i;
       }
     }
@@ -41,4 +42,15 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
     }
   }
   return dest;
+}
+
+void *s21_memset(void *str, int c, s21_size_t n) {
+  if (str != S21_NULL) {
+    unsigned char *str_uchar = (unsigned char *)str;
+    unsigned char c_uchar = (unsigned char)c;
+    for (s21_size_t i = 0; i < n; i++) {
+      str_uchar[i] = c_uchar;
+    }
+  }
+  return str;
 }
