@@ -80,5 +80,13 @@ int main() {
   printf("%s %p\n", s21_strrchr(str1_copy1, 'B'), s21_strrchr(str1_copy1, 'B'));
   printf("%s %p\n\n", strrchr(str1_copy1, 'B'), strrchr(str1_copy1, 'B'));
 
+  printf("strsr:\n");
+  printf("%s\n", s21_strstr("someone has to be hero and one bro", ""));
+  printf("%s\n", strstr("someone has to be hero and one bro", ""));
+  printf("%s\n", s21_strstr("someone has to be hero and one bro", " bro"));
+  printf("%s\n", strstr("someone has to be hero and one bro", " bro"));
+  printf("%s\n", s21_strstr("someone has to be hero and one bro", "one bro"));
+  printf("%s\n\n", strstr("someone has to be hero and one bro", "one bro"));
+
   return 0;
 }

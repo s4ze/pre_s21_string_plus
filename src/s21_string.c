@@ -141,13 +141,29 @@ char *s21_strpbrk(const char *str1, const char *str2) {
 char *s21_strrchr(const char *str, int c) {
   char *c_ptr = S21_NULL;
   if (str != S21_NULL) {
-    const char *str_uchar = (const char *)str;
     char c_uchar = (char)c;
-    for (s21_size_t i = 0; i == 0 || str_uchar[i - 1] != '\0'; i++)
-      if (str_uchar[i] == c_uchar) c_ptr = (char *)str_uchar + i;
+    for (s21_size_t i = 0; i == 0 || str[i - 1] != '\0'; i++)
+      if (str[i] == c_uchar) c_ptr = (char *)str + i;
   }
   return c_ptr;
 }
 
-char *s21_strstr(const char *haystack, const char *needle);
+char *s21_strstr(const char *haystack, const char *needle) {
+  char *result_ptr = S21_NULL;
+  const s21_size_t haystack_len = s21_strlen(haystack);
+  const s21_size_t needle_len = s21_strlen(needle);
+  if (haystack != S21_NULL && needle != S21_NULL &&
+      s21_strncmp(needle, "", 1) > 0) {
+    for (s21_size_t i = 0;
+         i <= haystack_len - needle_len && result_ptr == S21_NULL; i++)
+      for (s21_size_t j = 0; j < needle_len && haystack[i + j] == needle[j];
+           j++)
+        if (j + 1 == needle_len) result_ptr = (char *)haystack + i;
+  } else if (haystack != S21_NULL &&
+             (needle == S21_NULL || s21_strncmp(needle, "", 1) == 0)) {
+    result_ptr = (char *)haystack;
+  }
+  return result_ptr;
+}
+
 char *s21_strtok(char *str, const char *delim);
