@@ -88,5 +88,23 @@ int main() {
   printf("%s\n", s21_strstr("someone has to be hero and one bro", "one bro"));
   printf("%s\n\n", strstr("someone has to be hero and one bro", "one bro"));
 
+  char str3_1[] =
+      "BRO WHAT DID YOU DO??? WHY AND! WHO IS THIS? LOL! I'M DONE...";
+  char str3_2[] =
+      "BRO WHAT DID YOU DO??? WHY AND! WHO IS THIS? LOL! I'M DONE...";
+  const char *delims = ".!?";
+  char *result_string;
+
+  printf("strtok:\n");
+  result_string = s21_strtok(str3_1, delims);
+  while (result_string != S21_NULL) {
+    printf("%s\n", result_string);
+    result_string = s21_strtok(S21_NULL, delims);
+  }
+  result_string = s21_strtok(str3_2, delims);
+  while (result_string != S21_NULL) {
+    printf("%s\n", result_string);
+    result_string = s21_strtok(S21_NULL, delims);
+  }
   return 0;
 }
