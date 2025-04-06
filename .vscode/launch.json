@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "cwd": "${workspaceFolder}/src",
-            "program": "${cwd}/src/s21_string",
+            "program": "${cwd}/src/debug",
             "args": [],
             "stopAtEntry": false,
             "environment": [],

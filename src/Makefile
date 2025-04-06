@@ -9,11 +9,11 @@ testing:
 	$(CC) $(CFLAGS) $(SOURCES) testing.c -o $@
 
 debug:
-	gcc -Wall -Werror -Wextra -g -O0 s21_string.c testing.c -o s21_string
+	$(CC) $(CFLAGS) -g -O0 $(SOURCES) -o $@
 
 clean:
-	rm testing
-	rm .clang-format
+	@rm testing
+	@# rm .clang-format
 
 test:
 
@@ -22,8 +22,8 @@ s21_string.a:
 gcov_report:
 
 clang-format:
-	cp ./../materials/linters/.clang-format ./
-	clang-format -i $(ALL_SRC)
+	@cp ./../materials/linters/.clang-format ./
+	@clang-format -n $(SOURCES)
 
 cppcheck:
-	cppcheck --enable=all --suppress=missingIncludeSystem $(ALL_SRC)
+	@cppcheck --enable=all --suppress=missingIncludeSystem $(SOURCES)
