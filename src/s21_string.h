@@ -146,4 +146,6 @@ char *s21_strstr(const char *haystack, const char *needle);
 char *s21_strtok(char *str, const char *delim);
 
 int s21_sprintf(char *str, const char *format, ...);
+s21_size_t int_length(int n);
+char *int_to_str(char *s, int n);
 #endif
