@@ -11,11 +11,11 @@ testing:
 	@$(CC) $(CFLAGS) $(SOURCES) testing_sprintf.c -o $@
 
 debug:
-	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) -o $@
+	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_sprintf.c -o $@
 
 clean:
-	@rm testing
-	# rm .clang-format
+	@rm testing debug
+	@# rm .clang-format
 
 test:
 

@@ -18,12 +18,13 @@ int s21_sprintf(char *str, const char *format, ...) {
                             // args, following format string
     c = format[format_counter];
     // val = va_arg(args, int);       // getting args values
-    if (format[format_counter] == '%') {  // potentionally separate in func
-                                          // format_reader specificator type
-                                          // TODO: flags
-                                          // TODO: width
-                                          // TODO: .accuracy
-                                          // TODO: length
+    if (c == '%') {  // potentionally separate in func
+      // format_reader specificator type
+      // TODO: flags
+      // TODO: width
+      // TODO: .accuracy
+      // TODO: length
+      c = format[++format_counter];
       if (c == 'c') {
         int val = va_arg(args, int);
         //
@@ -31,7 +32,8 @@ int s21_sprintf(char *str, const char *format, ...) {
       } else if (c == 'd') {
         int val = va_arg(args, int);
         //
-        str[str_counter++] = val;  // fix
+        s21_int_to_str(str + str_counter, val);
+        str_counter++;  // fix
       } else if (c == 'i') {
       } else if (c == 'e') {
       } else if (c == 'E') {
@@ -63,8 +65,8 @@ int s21_sprintf(char *str, const char *format, ...) {
                    // width and accuracy
 } */
 
-char *int_to_str(char *s, int n) {
-  s21_size_t counter = int_length(n) - 1;
+char *s21_int_to_str(char *s, int n) {
+  s21_size_t counter = s21_int_length(n) - 1;
   while (n > 9) {
     s[counter--] = (n % 10) + 48;
     n /= 10;
@@ -73,7 +75,7 @@ char *int_to_str(char *s, int n) {
   return s;
 }
 
-s21_size_t int_length(int n) {
+s21_size_t s21_int_length(int n) {
   s21_size_t size = 0;
   if (n != 0)
     for (; n != 0; n /= 10) size++;
