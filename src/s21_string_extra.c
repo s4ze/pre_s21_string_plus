@@ -33,9 +33,27 @@ void *s21_insert(const char *src, const char *str, s21_size_t start_index) {
     s21_strcpy(result + start_index, str);
     s21_strcpy(result + start_index + str_len, src + start_index);
   }
-  return result;
+  return (void *)result;
 }
-// void *s21_trim(const char *src, const char *trim_chars) {}
+
+void *s21_trim(const char *src, const char *trim_chars) {
+  char *result = S21_NULL;
+  if (src != S21_NULL) {
+    char *start_src_ptr = (char *)src;
+    for (; is_char_in_str(start_src_ptr, trim_chars) == 1; start_src_ptr++);
+    s21_size_t src_len = s21_strlen(src);
+    char *end_src_ptr = (char *)src + src_len - 1;
+    for (; is_char_in_str(end_src_ptr, trim_chars); end_src_ptr--);
+    s21_size_t result_len =
+        end_src_ptr > start_src_ptr ? end_src_ptr - start_src_ptr + 1 : 1;
+    result = (char *)malloc(sizeof(char) * (src_len + 1));
+    for (s21_size_t i = 0; i < result_len; i++) {
+      result[i] = start_src_ptr[i];
+    }
+    result[result_len] = '\0';
+  }
+  return (void *)result;
+}
 
 void *s21_shift_symbols(const char *str, const char start, const char end,
                         const int shift) {
@@ -62,6 +80,7 @@ char *s21_strcpy(char *dest, const char *src) {
     for (; *src_ptr != '\0'; dest_ptr++) {
       *dest_ptr = *(src_ptr++);
     }
+    *dest_ptr = '\0';
     dest_ptr = dest;
   }
   return dest_ptr;

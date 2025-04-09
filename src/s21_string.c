@@ -1,7 +1,5 @@
 #include "s21_string.h"
 
-char is_char_in_str(const char *c, const char *s);
-
 void *s21_memchr(const void *str, int c, s21_size_t n) {
   s21_size_t index = n;
   const unsigned char *str_uchar = (const unsigned char *)str;
