@@ -1,5 +1,8 @@
 #include "s21_string.h"
 
+char *s21_int_to_exp_str(char *s, int n);
+char *s21_float_to_str(char *s, double n);
+
 char *specificator_flags = "-= #0";
 // width: digit or * (asterix)
 char accuracy = '.';  // and *
@@ -29,13 +32,16 @@ int s21_sprintf(char *str, const char *format, ...) {
         int val = va_arg(args, int);
         //
         str[str_counter++] = val;
-      } else if (c == 'd') {
+      } else if (c == 'd' || c == 'i') {
         int val = va_arg(args, int);
         //
         s21_int_to_str(str + str_counter, val);
-        str_counter++;  // fix
-      } else if (c == 'i') {
+        str_counter++;
       } else if (c == 'e') {
+        int val = va_arg(args, int);
+        //
+        s21_int_to_exp_str(str + str_counter, val);
+        str_counter++;
       } else if (c == 'E') {
       } else if (c == 'f') {
       } else if (c == 'g') {
@@ -75,6 +81,18 @@ char *s21_int_to_str(char *s, int n) {
   return s;
 }
 
+char *s21_float_to_str(char *s, double n) { return s + (int)n; }
+
+char *s21_int_to_exp_str(char *s, int n) {
+  s21_size_t counter = s21_int_length(n) - 1;
+  while (n > 9) {
+    s[counter--] = (n % 10) + 48;
+    n /= 10;
+  }
+  s[counter] = n % 10 + 48;
+  return s;
+}
+
 s21_size_t s21_int_length(int n) {
   s21_size_t size = 0;
   if (n != 0)
@@ -83,3 +101,11 @@ s21_size_t s21_int_length(int n) {
     size = 1;
   return size;
 }
+
+/* s21_size_t s21_float_length(double n) {
+  if (n != 0)
+    for (; n != 0; n /= 10) size++;
+  else
+    size = 1;
+  return size;
+} */
