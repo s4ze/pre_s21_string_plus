@@ -169,18 +169,19 @@ char *s21_strstr(const char *haystack, const char *needle) {
 char *s21_strtok(char *str, const char *delim) {
   static char *save_ptr = S21_NULL;
   if (str != S21_NULL) save_ptr = str;
-  for (; *save_ptr != '\0' && is_char_in_str(save_ptr, delim) == 1; save_ptr++);
+  for (; *save_ptr != '\0' && s21_is_char_in_str(save_ptr, delim) == 1;
+       save_ptr++);
   char *token_start = S21_NULL;
   if (*save_ptr != '\0') {
     token_start = save_ptr;
-    for (; *save_ptr != '\0' && is_char_in_str(save_ptr, delim) == 0;
+    for (; *save_ptr != '\0' && s21_is_char_in_str(save_ptr, delim) == 0;
          save_ptr++);
     if (*save_ptr != '\0') *save_ptr++ = '\0';
   }
   return token_start;
 }
 
-char is_char_in_str(const char *c, const char *s) {
+char s21_is_char_in_str(const char *c, const char *s) {
   const s21_size_t s_len = s21_strlen(s);
   char is_in = 0;
   for (s21_size_t i = 0; i < s_len && is_in == 0; i++)

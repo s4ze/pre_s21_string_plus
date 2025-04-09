@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Werror -Wextra -std=c11
+CFLAGS=-Werror -Wextra -std=c11 # -Wall
 
 SOURCES=s21_string.c s21_string_extra.c s21_sprintf.c
 
@@ -8,10 +8,10 @@ SOURCES=s21_string.c s21_string_extra.c s21_sprintf.c
 all: clang-format testing
 
 testing:
-	@$(CC) $(CFLAGS) $(SOURCES) testing_extra.c -o $@
+	@$(CC) $(CFLAGS) $(SOURCES) testing_sprintf.c -o $@
 
 debug:
-	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_extra.c -o $@
+	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_sprintf.c -o $@
 
 clean:
 	@rm testing debug

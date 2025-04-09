@@ -1,13 +1,7 @@
 #include "s21_string.h"
 
-char *s21_int_to_exp_str(char *s, int n);
-char *s21_float_to_str(char *s, double n);
-
-char *specificator_flags = "-= #0";
-// width: digit or * (asterix)
-char accuracy = '.';  // and *
-char *length = "hlL";
-char *specificators = "cdieEfgGosuxXpn%";
+// char *s21_int_to_exp_str(char *s, long long n);
+char *s21_float_to_str(char *s, long double n);
 
 int s21_sprintf(char *str, const char *format, ...) {
   va_list args;
@@ -23,39 +17,50 @@ int s21_sprintf(char *str, const char *format, ...) {
     // val = va_arg(args, int);       // getting args values
     if (c == '%') {  // potentionally separate in func
       // format_reader specificator type
-      // TODO: flags
-      // TODO: width
-      // TODO: .accuracy
-      // TODO: length
       c = format[++format_counter];
-      if (c == 'c') {
-        int val = va_arg(args, int);
-        //
-        str[str_counter++] = val;
-      } else if (c == 'd' || c == 'i') {
-        int val = va_arg(args, int);
-        //
-        s21_int_to_str(str + str_counter, val);
-        str_counter++;
-      } else if (c == 'e') {
-        int val = va_arg(args, int);
-        //
-        s21_int_to_exp_str(str + str_counter, val);
-        str_counter++;
-      } else if (c == 'E') {
-      } else if (c == 'f') {
-      } else if (c == 'g') {
-      } else if (c == 'G') {
-      } else if (c == 'o') {
-      } else if (c == 's') {
-      } else if (c == 'u') {
-      } else if (c == 'x') {
-      } else if (c == 'X') {
-      } else if (c == 'p') {
-      } else if (c == 'n') {
-      } else if (c == '%') {
+      if (s21_is_char_in_str(&c, "-+ #0")) {  // flags
+        // TODO: flags
       }
-      //
+      if (s21_is_char_in_str(&c, "*0123456789")) {  // width
+        // TODO: width
+      }
+      if (c == '.' &&
+          s21_is_char_in_str(format + ++format_counter, "")) {  // accuracy
+        // TODO: .accuracy
+      }
+      if (s21_is_char_in_str(&c, "lLh")) {  // length
+        // TODO: length
+      }
+      if (s21_is_char_in_str(&c, "cdieEfgGosuxXpn%")) {  // specificator
+        if (c == 'c') {
+          int val = va_arg(args, int);
+          //
+          str[str_counter++] = val;
+        } else if (c == 'd' || c == 'i') {
+          int val = va_arg(args, int);
+          //
+          s21_int_to_str(str + str_counter, val);
+          str_counter++;
+        } else if (c == 'e') {
+          // int val = va_arg(args, int);
+          //
+          // s21_long_to_exp_str(str + str_counter, val);
+          str_counter++;
+        } else if (c == 'E') {
+        } else if (c == 'f') {
+        } else if (c == 'g') {
+        } else if (c == 'G') {
+        } else if (c == 'o') {
+        } else if (c == 's') {
+        } else if (c == 'u') {
+        } else if (c == 'x') {
+        } else if (c == 'X') {
+        } else if (c == 'p') {
+        } else if (c == 'n') {
+        } else if (c == '%') {
+        }
+        //
+      }
     }
   }
   va_end(args);
@@ -71,7 +76,35 @@ int s21_sprintf(char *str, const char *format, ...) {
                    // width and accuracy
 } */
 
-char *s21_int_to_str(char *s, int n) {
+char *s21_int_to_str(char *s, long long n) {
+  s21_size_t counter = s21_int_length(n) - 1;
+  while (n > 9) {
+    s[counter--] = (n % 10) + 48;
+    n /= 10;
+  }
+  s[counter] = '0' + n % 10;
+  return s;
+}
+
+char *s21_float_to_str(char *s, long double n) {
+  char *result = S21_NULL;
+  if (s != S21_NULL) {
+    // doesn't work
+
+    result = s;
+    int negative = 0;
+    if (n > 0) negative = 1;
+    long long fractional = (long long)n;
+    s21_int_to_str(s, fractional);
+    s21_size_t fractional_len = s21_int_length(fractional);
+    double integer = n - fractional;
+    s21_int_to_str(s + fractional_len, integer);
+    result += (int)integer - (int)integer;
+  }
+  return result;
+}
+
+/* char *s21_long_to_exp_str(char *s, long n) {
   s21_size_t counter = s21_int_length(n) - 1;
   while (n > 9) {
     s[counter--] = (n % 10) + 48;
@@ -79,21 +112,9 @@ char *s21_int_to_str(char *s, int n) {
   }
   s[counter] = n % 10 + 48;
   return s;
-}
+} */
 
-char *s21_float_to_str(char *s, double n) { return s + (int)n; }
-
-char *s21_int_to_exp_str(char *s, int n) {
-  s21_size_t counter = s21_int_length(n) - 1;
-  while (n > 9) {
-    s[counter--] = (n % 10) + 48;
-    n /= 10;
-  }
-  s[counter] = n % 10 + 48;
-  return s;
-}
-
-s21_size_t s21_int_length(int n) {
+s21_size_t s21_int_length(long long n) {
   s21_size_t size = 0;
   if (n != 0)
     for (; n != 0; n /= 10) size++;

@@ -153,9 +153,9 @@ void *s21_to_lower(const char *str);
 void *s21_insert(const char *src, const char *str, s21_size_t start_index);
 void *s21_trim(const char *src, const char *trim_chars);
 
-s21_size_t s21_int_length(int n);      // remove
-char *s21_int_to_str(char *s, int n);  // remove
+s21_size_t s21_int_length(long long n);      // remove
+char *s21_int_to_str(char *s, long long n);  // remove
 char *s21_strcpy(char *dest, const char *src);
-char is_char_in_str(const char *c, const char *s);
+char s21_is_char_in_str(const char *c, const char *s);
 
 #endif
