@@ -8,10 +8,10 @@ SOURCES=s21_string.c s21_string_extra.c s21_sprintf.c
 all: clang-format testing
 
 testing:
-	@$(CC) $(CFLAGS) $(SOURCES) testing_sprintf.c -o $@
+	@$(CC) $(CFLAGS) $(SOURCES) testing_sprintf.c -o $@ -lm
 
 debug:
-	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_sprintf.c -o $@
+	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_sprintf.c -o $@ -lm
 
 clean:
 	@rm testing debug

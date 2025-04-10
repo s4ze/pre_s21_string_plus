@@ -107,12 +107,14 @@ s21_size_t s21_strcspn(const char *str1, const char *str2) {
 }
 
 char *s21_strerror(int errnum) {
-  char *errnum_description;
+  char *errnum_description = (char *)malloc(sizeof(char) * 120);
   static char *errlist[] = ERRLIST;
   if (errnum >= 0 && errnum < ERRLIST_LEN)
-    errnum_description = (char *)errlist[errnum];
+    s21_strcpy(errnum_description, errlist[errnum]);
   else {
-    errnum_description = errlist[ERRLIST_LEN - 1];
+    s21_strcpy(errnum_description, errlist[ERRLIST_LEN - 1]);
+    s21_sprintf(errnum_description + s21_strlen(errnum_description), " %d",
+                errnum);
     // TODO: add errnum after "Unkown error " with sprintf
   }
   return errnum_description;

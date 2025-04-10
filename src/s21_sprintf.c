@@ -89,17 +89,19 @@ char *s21_int_to_str(char *s, long long n) {
 char *s21_float_to_str(char *s, long double n) {
   char *result = S21_NULL;
   if (s != S21_NULL) {
+    result = s;
+    long double integral, fractional = modfl(n, &integral);
+
     // doesn't work
 
-    result = s;
-    int negative = 0;
+    /* int negative = 0;
     if (n > 0) negative = 1;
     long long fractional = (long long)n;
     s21_int_to_str(s, fractional);
     s21_size_t fractional_len = s21_int_length(fractional);
-    double integer = n - fractional;
-    s21_int_to_str(s + fractional_len, integer);
-    result += (int)integer - (int)integer;
+    double integral = n - fractional;
+    s21_int_to_str(s + fractional_len, integral);
+    result += (int)integral - (int)integral; */
   }
   return result;
 }
@@ -123,10 +125,31 @@ s21_size_t s21_int_length(long long n) {
   return size;
 }
 
-/* s21_size_t s21_float_length(double n) {
-  if (n != 0)
-    for (; n != 0; n /= 10) size++;
-  else
-    size = 1;
+s21_size_t s21_float_integral_length(long double n) {
+  s21_size_t size = 0;
+  if (n != 0.0) {
+    if (n < 1 || n > -1) size -= 1;
+    for (; n != 0; size++) {
+      if (n > 0 && n <= 1 || n < 0 && n >= -1) n = truncl(n);
+      n /= 10;
+    }
+  }
   return size;
-} */
+}
+
+s21_size_t s21_float_fractional_length(long double n) {
+  s21_size_t size = 0;
+  if (n != 0.0) {
+    if (n >= 1 || n <= -1) {
+      long double _;
+      n = modfl(n, &_);
+    }
+    for (; n != 0; size++) {
+      n *= 10.0;
+      int digit = (int)n;
+      n -= digit;
+    }
+  } else
+    size = 0;
+  return size;
+}
