@@ -112,10 +112,7 @@ char *s21_strerror(int errnum) {
   if (errnum >= 0 && errnum < ERRLIST_LEN)
     s21_strcpy(errnum_description, errlist[errnum]);
   else {
-    s21_strcpy(errnum_description, errlist[ERRLIST_LEN - 1]);
-    s21_sprintf(errnum_description + s21_strlen(errnum_description), " %d",
-                errnum);
-    // TODO: add errnum after "Unkown error " with sprintf
+    s21_sprintf(errnum_description, "Unknown error %d", errnum);
   }
   return errnum_description;
 }

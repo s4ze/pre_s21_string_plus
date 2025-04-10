@@ -1,7 +1,7 @@
 #ifndef ERRLIST_H
 #define ERRLIST_H
 #ifdef __linux__
-#define ERRLIST_LEN 135
+#define ERRLIST_LEN 134
 #define ERRLIST                                                                \
   {                                                                            \
     "Success", "Operation not permitted", "No such file or directory",         \
@@ -65,10 +65,10 @@
         "Required key not available", "Key has expired",                       \
         "Key has been revoked", "Key was rejected by service", "Owner died",   \
         "State not recoverable", "Operation not possible due to RF-kill",      \
-        "Memory page has hardware error", "Unknown error"                      \
+        "Memory page has hardware error"                                       \
   }
 #elif __macos__
-#define ERRLIST_LEN 102
+#define ERRLIST_LEN 101
 #define ERRLIST                                                                \
   {                                                                            \
     "Error 0", "Operation not permitted", "No such file or directory",         \
@@ -115,7 +115,7 @@
         "No attribute found", "Bad message", "Reserved",                       \
         "No message available", "Reserved", "No STREAM resources",             \
         "Not a STREAM", "Protocol error", "STREAM ioctl() timeout",            \
-        "Operation	not supported on socket", "Unknown error"              \
+        "Operation	not supported on socket"                                    \
   }
 #endif
 #endif
