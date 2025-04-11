@@ -170,14 +170,17 @@ char *s21_strstr(const char *haystack, const char *needle) {
 char *s21_strtok(char *str, const char *delim) {
   static char *save_ptr = S21_NULL;
   if (str != S21_NULL) save_ptr = str;
-  for (; *save_ptr != '\0' && s21_strchr(delim, *save_ptr) != S21_NULL;
-       save_ptr++);
   char *token_start = S21_NULL;
-  if (*save_ptr != '\0') {
-    token_start = save_ptr;
-    for (; *save_ptr != '\0' && s21_strchr(delim, *save_ptr) == S21_NULL;
+  if (save_ptr != S21_NULL && delim != S21_NULL) {
+    for (; *save_ptr != '\0' && s21_strchr(delim, *save_ptr) != S21_NULL;
          save_ptr++);
-    if (*save_ptr != '\0') *save_ptr++ = '\0';
+    if (*save_ptr != '\0') {
+      token_start = save_ptr;
+      for (; *save_ptr != '\0' && s21_strchr(delim, *save_ptr) == S21_NULL;
+           save_ptr++);
+      if (*save_ptr != '\0') *save_ptr++ = '\0';
+    } else
+      save_ptr = S21_NULL;
   }
   return token_start;
 }

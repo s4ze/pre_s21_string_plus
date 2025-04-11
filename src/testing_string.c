@@ -4,7 +4,7 @@
 #include "s21_string.h"
 
 int main() {
-  /* char *str1 = "Hello, World!";
+  char *str1 = "Hello, World!";
 
   printf("memchr:\n");
   printf("%c\n", *(char *)s21_memchr(str1, 'o', 7));
@@ -105,20 +105,53 @@ int main() {
   while (result_string != S21_NULL) {
     printf("%s\n", result_string);
     result_string = s21_strtok(S21_NULL, delims);
-  } */
+  }
 
-  char *str1 = "";
-  char *str2 = "";
+  str1 = "";
+  str2 = "";
   char *str3 = strstr(str1, str2);
 
   printf("strstr:\n");
-  printf("%s | %s\n\n", s21_strstr(str1, str2), str3);
+  printf("%s | %s\n", s21_strstr(str1, str2), str3);
   str2 = "Something";
   str3 = strstr(str1, str2);
-  printf("%s | %s\n\n", s21_strstr(str1, str2), str3);
+  printf("%s | %s\n", s21_strstr(str1, str2), str3);
   str2 = "Barx";
   str3 = strstr(str1, str2);
-  printf("%s | %s\n", s21_strstr(str1, str2), str3);
+  printf("%s | %s\n\n", s21_strstr(str1, str2), str3);
+
+  char *str4 = (char *)malloc(sizeof(char) * 101);
+  char *str5 = (char *)malloc(sizeof(char) * 101);
+  char *str6 = (char *)malloc(sizeof(char) * 101);
+  char *str7 = (char *)malloc(sizeof(char) * 101);
+
+  printf("strtok:\n");
+
+  strcpy(str4, "\nAhehehehehehehB");
+  strcpy(str5, "\nAhehehehehehehB");
+  strcpy(str6, "A");
+
+  printf("%s | %s\n", strtok(str5, str6), s21_strtok(str4, str6));
+
+  strcpy(str4, "\0Hello, world!");
+  strcpy(str5, "\0Hello, world!");
+  strcpy(str6, "\0");
+
+  printf("%s | %s\n", strtok(str5, str6), s21_strtok(str4, str6));
+
+  strcpy(str4, "\0Hello, world!");
+  strcpy(str5, "\0Hello, world!");
+  strcpy(str6, "");
+
+  printf("%s | %s\n", strtok(str5, str6), s21_strtok(str4, str6));
+
+  strcpy(str6, "");
+
+  printf("%s | %s\n", strtok(S21_NULL, str6), s21_strtok(S21_NULL, str6));
+
+  free(str4);
+  free(str5);
+  free(str6);
 
   return 0;
 }
