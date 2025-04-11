@@ -26,7 +26,7 @@
         {
             "label": "make debug",
             "type": "shell",
-            "command": "cd src; make debug",
+            "command": "cd src; make clean; make debug",
             "group": {
                 "kind": "build",
                 "isDefault": true
