@@ -18,20 +18,19 @@ int s21_sprintf(char *str, const char *format, ...) {
     if (c == '%') {  // potentionally separate in func
       // format_reader specificator type
       c = format[++format_counter];
-      if (s21_is_char_in_str(&c, "-+ #0")) {  // flags
+      if (s21_strchr("-+ #0", c) != S21_NULL) {  // flags
         // TODO: flags
       }
-      if (s21_is_char_in_str(&c, "*0123456789")) {  // width
+      if (s21_strchr("*0123456789", c) != S21_NULL) {  // width
         // TODO: width
       }
-      if (c == '.' &&
-          s21_is_char_in_str(format + ++format_counter, "")) {  // accuracy
+      if (c == '.' && s21_strchr("", format[++format_counter])) {  // accuracy
         // TODO: .accuracy
       }
-      if (s21_is_char_in_str(&c, "lLh")) {  // length
+      if (s21_strchr("lLh", c)) {  // length
         // TODO: length
       }
-      if (s21_is_char_in_str(&c, "cdieEfgGosuxXpn%")) {  // specificator
+      if (s21_strchr("cdieEfgGosuxXpn%", c)) {  // specificator
         if (c == 'c') {
           int val = va_arg(args, int);
           //

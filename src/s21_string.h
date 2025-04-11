@@ -158,6 +158,5 @@ s21_size_t s21_float_integral_length(long double n);    // remove
 s21_size_t s21_float_fractional_length(long double n);  // remove
 char *s21_int_to_str(char *s, long long n);             // remove
 char *s21_strcpy(char *dest, const char *src);
-char s21_is_char_in_str(const char *c, const char *s);
 
 #endif

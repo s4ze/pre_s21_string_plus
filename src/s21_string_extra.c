@@ -40,13 +40,15 @@ void *s21_trim(const char *src, const char *trim_chars) {
   char *result = S21_NULL;
   if (src != S21_NULL) {
     char *start_src_ptr = (char *)src;
-    for (; s21_is_char_in_str(start_src_ptr, trim_chars) == 1; start_src_ptr++);
+    for (; s21_strchr(trim_chars, *start_src_ptr) != S21_NULL; start_src_ptr++);
+
     s21_size_t src_len = s21_strlen(src);
     char *end_src_ptr = (char *)src + src_len - 1;
-    for (; s21_is_char_in_str(end_src_ptr, trim_chars); end_src_ptr--);
+    for (; s21_strchr(trim_chars, *end_src_ptr) != S21_NULL; end_src_ptr--);
+
     s21_size_t result_len =
-        end_src_ptr > start_src_ptr ? end_src_ptr - start_src_ptr + 1 : 1;
-    result = (char *)malloc(sizeof(char) * (src_len + 1));
+        end_src_ptr >= start_src_ptr ? end_src_ptr - start_src_ptr + 1 : 0;
+    result = (char *)malloc(sizeof(char) * (result_len + 1));
     for (s21_size_t i = 0; i < result_len; i++) {
       result[i] = start_src_ptr[i];
     }

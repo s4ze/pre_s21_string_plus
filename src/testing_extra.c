@@ -3,10 +3,10 @@
 int main() {
   printf("TESTING:\n");
   char *result = (char *)malloc(sizeof(char) * 100);
-  s21_strcpy(result, "0123456789");
+  s21_strcpy(result, "Hello");
   printf("%s\n", result);
   char *result2 = (char *)malloc(sizeof(char) * 100);
-  result = (char *)s21_insert(result, ", himynameis ", 2);
+  result = (char *)s21_insert(result, "!!!", s21_strlen(result));
   printf("%s\n", result);
 
   s21_strcpy(result, "      ");
@@ -40,6 +40,10 @@ int main() {
   s21_strcpy(result, "a ");
   s21_strcpy(result2, s21_trim(result, " "));
   printf("%s%s\n", result2, "end");  // should be "aend"
+
+  s21_strcpy(result, "");
+  s21_strcpy(result2, s21_trim(result, ""));
+  printf("%s\n", result2);
 
   free(result);
   free(result2);
