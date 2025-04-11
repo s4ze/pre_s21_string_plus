@@ -2,9 +2,9 @@
 
 int main() {
   char *result = (char *)malloc(sizeof(char) * 200);
-  int i = 123456;
+  /*int i = 123456;
   char *s = (char *)malloc(sizeof(char) * (s21_int_length(i) + 1));
-  /* s21_sprintf(s, "%d", 9432);
+  s21_sprintf(s, "%d", 9432);
   printf("%s\n", s);
   printf("%10.7d\n", 1235);
   printf("%+.20e\n", 1324.343298423);
@@ -15,13 +15,13 @@ int main() {
   sprintf(
       result, "%.90lf",
       -11111111111111111111.132432423942384732498237498273948723894723984732984732);
-  printf("%s\n", result); */
+  printf("%s\n", result);
 
   double num =
       -111111111111111.132432423942384732498237498273948723894723984732984732;
-  /* sprintf(result, "%.90lf", num);
+  sprintf(result, "%.90lf", num);
   printf("\nseparating from variable:\n%.90lf\n%s\n%lld\n%.90lf\n", num, result,
-         (long long)num, num - (long long)num); */
+         (long long)num, num - (long long)num);
 
   long double int_part, frac_part = modfl(num, &int_part);
   printf("\nmodfl func:\n%Lf\n%Lf\n", int_part, frac_part);
@@ -30,8 +30,19 @@ int main() {
          s21_float_integral_length(int_part),
          s21_float_fractional_length(frac_part));
 
-  printf("\n\"9.99\" len:\n%lu %lu\n", s21_float_integral_length(9.99),
-         s21_float_fractional_length(9.99));
+  printf("\n\"9.99\" len:\n%lu %lu\n\n", s21_float_integral_length(9.99),
+         s21_float_fractional_length(9.99));*/
+
+  printf("sprintf:\n");
+
+  printf("21 :%d:%s\n",
+         s21_sprintf(result, "%f%s%s", 123.456,
+                     " what if you wanted to go to heaven, bug God said ",
+                     "bruhbruh"),
+         result);
+
+  printf("21 :%d:%s\n", s21_sprintf(result, "%u %u", 342324324, -34), result);
+  printf("ORG:%d:%s\n", sprintf(result, "%u %u", 342324324, -34), result);
 
   free(result);
   return 0;

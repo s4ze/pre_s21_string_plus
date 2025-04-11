@@ -1,13 +1,19 @@
 #include "s21_string.h"
 
 // char *s21_int_to_exp_str(char *s, long long n);
-char *s21_float_to_str(char *s, long double n);
+
+s21_size_t s21_int_length(long long n);
+s21_size_t s21_uint_length(unsigned long long n);
+s21_size_t s21_float_integral_length(long double n);
+s21_size_t s21_float_fractional_length(long double n);
+s21_size_t s21_int_to_str(char *s, long long n);
+s21_size_t s21_uint_to_str(char *s, unsigned long long n);
+s21_size_t s21_float_to_str(char *s, long double n);
 
 int s21_sprintf(char *str, const char *format, ...) {
   va_list args;
   va_start(args, format);
   // specificator: %[флаги][ширина][.точность][длина]тип
-  int val = 0;
   int format_counter = 0, str_counter = 0;
   char c;
   for (; format[format_counter] != '\0';
@@ -38,20 +44,33 @@ int s21_sprintf(char *str, const char *format, ...) {
         } else if (c == 'd' || c == 'i') {
           int val = va_arg(args, int);
           //
-          s21_int_to_str(str + str_counter, val);
-          str_counter++;
+          str_counter += s21_int_to_str(str + str_counter, val);
         } else if (c == 'e') {
           // int val = va_arg(args, int);
           //
           // s21_long_to_exp_str(str + str_counter, val);
-          str_counter++;
+          str_counter += 0;
         } else if (c == 'E') {
         } else if (c == 'f') {
+          // if no length then float, if l then double, if Lf then long double
+          double val = va_arg(args, double);  // or something
+
+          int result = s21_float_to_str(str + str_counter, val);
+          printf("%d\n", result);
+          str_counter += result;
         } else if (c == 'g') {
         } else if (c == 'G') {
         } else if (c == 'o') {
         } else if (c == 's') {
+          const char *val = va_arg(args, const char *);
+
+          s21_size_t val_len = s21_strlen(val);
+          s21_strncat(str + str_counter, val, val_len);
+          str_counter += val_len;
         } else if (c == 'u') {
+          unsigned int val = va_arg(args, unsigned int);
+
+          str_counter += s21_uint_to_str(str + str_counter, val);
         } else if (c == 'x') {
         } else if (c == 'X') {
         } else if (c == 'p') {
@@ -60,10 +79,12 @@ int s21_sprintf(char *str, const char *format, ...) {
         }
         //
       }
-    }
+    } else
+      str[str_counter++] = format[format_counter];
   }
+  str[str_counter] = '\0';
   va_end(args);
-  return val + format_counter;
+  return str_counter;
 }
 
 /* int format_reader(const char *format, int *counter) {
@@ -75,34 +96,72 @@ int s21_sprintf(char *str, const char *format, ...) {
                    // width and accuracy
 } */
 
-char *s21_int_to_str(char *s, long long n) {
+s21_size_t s21_int_to_str(char *s, long long n) {
   s21_size_t counter = s21_int_length(n) - 1;
+  while (n > 9 || n < -9) {
+    s[counter--] = (n % 10) + 48;
+    n /= 10;
+  }
+  s[counter] = '0' + n % 10;
+  return s21_int_length(n);
+}
+
+s21_size_t s21_uint_to_str(char *s, unsigned long long n) {
+  s21_size_t size = s21_uint_length(n);
+  s21_size_t counter = size - 1;
   while (n > 9) {
     s[counter--] = (n % 10) + 48;
     n /= 10;
   }
   s[counter] = '0' + n % 10;
-  return s;
+  return size;
 }
 
-char *s21_float_to_str(char *s, long double n) {
-  char *result = S21_NULL;
-  if (s != S21_NULL) {
-    result = s;
-    long double integral, fractional = modfl(n, &integral);
-
-    // doesn't work
-
-    /* int negative = 0;
-    if (n > 0) negative = 1;
-    long long fractional = (long long)n;
-    s21_int_to_str(s, fractional);
-    s21_size_t fractional_len = s21_int_length(fractional);
-    double integral = n - fractional;
-    s21_int_to_str(s + fractional_len, integral);
-    result += (int)integral - (int)integral; */
+s21_size_t s21_float_to_str(char *s, long double n) {
+  // printing integer part
+  long double integral, fractional = modfl(n, &integral);
+  char float_str[200];
+  s21_size_t int_len = s21_float_integral_length(integral);
+  for (s21_size_t i = int_len - 1; i > 0; i--) {
+    integral = truncl(integral);
+    float_str[i] = '0' + (long long)integral % 10;
+    integral /= 10;
   }
-  return result;
+  float_str[0] = '0' + (long long)integral % 10;
+  //
+
+  s21_size_t i = int_len;
+  // TODO: add flags and etc
+  // if flags and etc then
+
+  // printing fractional part
+  float_str[i] = '.';
+  s21_size_t frac_len = s21_float_fractional_length(fractional);
+  int digit = (int)fractional;
+  for (++i;
+       i < frac_len &&
+       i < int_len + 1 + (6) /* + *ACCURACY*and i < accuracy (default=6) */;
+       i++) {
+    fractional *= 10.0;
+    digit = (int)fractional;
+    float_str[i] = '0' + digit;
+    fractional -= digit;
+  }
+
+  float_str[i] = '\0';  // null-terminator
+  s21_strncat(s, float_str, i);
+
+  // doesn't work
+
+  /* int negative = 0;
+  if (n > 0) negative = 1;
+  long long fractional = (long long)n;
+  s21_int_to_str(s, fractional);
+  s21_size_t fractional_len = s21_int_length(fractional);
+  double integral = n - fractional;
+  s21_int_to_str(s + fractional_len, integral);
+  result += (int)integral - (int)integral; */
+  return i;
 }
 
 /* char *s21_long_to_exp_str(char *s, long n) {
@@ -116,6 +175,15 @@ char *s21_float_to_str(char *s, long double n) {
 } */
 
 s21_size_t s21_int_length(long long n) {
+  s21_size_t size = 0;
+  if (n != 0)
+    for (; n != 0; n /= 10) size++;
+  else
+    size = 1;
+  return size;
+}
+
+s21_size_t s21_uint_length(unsigned long long n) {
   s21_size_t size = 0;
   if (n != 0)
     for (; n != 0; n /= 10) size++;
@@ -143,9 +211,10 @@ s21_size_t s21_float_fractional_length(long double n) {
       long double _;
       n = modfl(n, &_);
     }
+    int digit = (int)n;
     for (; n != 0; size++) {
       n *= 10.0;
-      int digit = (int)n;
+      digit = (int)n;
       n -= digit;
     }
   } else

@@ -156,7 +156,7 @@ void *s21_trim(const char *src, const char *trim_chars);
 s21_size_t s21_int_length(long long n);                 // remove
 s21_size_t s21_float_integral_length(long double n);    // remove
 s21_size_t s21_float_fractional_length(long double n);  // remove
-char *s21_int_to_str(char *s, long long n);             // remove
+s21_size_t s21_int_to_str(char *s, long long n);        // remove
 char *s21_strcpy(char *dest, const char *src);
 
 #endif
