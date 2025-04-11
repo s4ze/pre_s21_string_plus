@@ -152,14 +152,16 @@ char *s21_strstr(const char *haystack, const char *needle) {
   const s21_size_t haystack_len = s21_strlen(haystack);
   const s21_size_t needle_len = s21_strlen(needle);
   if (haystack != S21_NULL && needle != S21_NULL &&
-      s21_strncmp(needle, "", 1) > 0) {
+      haystack_len >= needle_len && s21_strncmp(needle, "", 1) > 0) {
     for (s21_size_t i = 0;
-         i <= haystack_len - needle_len && result_ptr == S21_NULL; i++)
+         i <= haystack_len - needle_len && result_ptr == S21_NULL; i++) {
       for (s21_size_t j = 0; j < needle_len && haystack[i + j] == needle[j];
-           j++)
+           j++) {
         if (j + 1 == needle_len) result_ptr = (char *)haystack + i;
-  } else if (haystack != S21_NULL &&
-             (needle == S21_NULL || s21_strncmp(needle, "", 1) == 0)) {
+      }
+    }
+  } else if (haystack != S21_NULL && s21_strncmp(haystack, "", 1) >= 0 &&
+             needle != S21_NULL && s21_strncmp(needle, "", 1) == 0) {
     result_ptr = (char *)haystack;
   }
   return result_ptr;

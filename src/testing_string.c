@@ -4,7 +4,7 @@
 #include "s21_string.h"
 
 int main() {
-  char *str1 = "Hello, World!";
+  /* char *str1 = "Hello, World!";
 
   printf("memchr:\n");
   printf("%c\n", *(char *)s21_memchr(str1, 'o', 7));
@@ -105,6 +105,20 @@ int main() {
   while (result_string != S21_NULL) {
     printf("%s\n", result_string);
     result_string = s21_strtok(S21_NULL, delims);
-  }
+  } */
+
+  char *str1 = "";
+  char *str2 = "";
+  char *str3 = strstr(str1, str2);
+
+  printf("strstr:\n");
+  printf("%s | %s\n\n", s21_strstr(str1, str2), str3);
+  str2 = "Something";
+  str3 = strstr(str1, str2);
+  printf("%s | %s\n\n", s21_strstr(str1, str2), str3);
+  str2 = "Barx";
+  str3 = strstr(str1, str2);
+  printf("%s | %s\n", s21_strstr(str1, str2), str3);
+
   return 0;
 }
