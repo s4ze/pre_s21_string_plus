@@ -14,8 +14,8 @@ debug:
 	@$(CC) $(CFLAGS) -g -O0 $(SOURCES) testing_sprintf.c -o $@ -lm
 
 clean:
-	@rm testing debug
-	@# rm .clang-format
+	@rm -f testing debug
+	@# rm -f .clang-format
 
 test:
 
